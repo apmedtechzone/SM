@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Social Media Directory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 0 10px;
+        }
+        
+        .company-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .company-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            padding: 25px 20px 15px;
+            text-align: center;
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+        }
+        
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .company-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .company-industry {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .card-body {
+            padding: 25px 20px;
+            text-align: center;
+        }
+        
+        .website-link {
+            display: inline-block;
+            background: #f8f9fa;
+            color: #2c3e50;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .website-link:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            transform: scale(1.1);
+        }
+        
+        .twitter { background: #1DA1F2; }
+        .linkedin { background: #0A66C2; }
+        .facebook { background: #4267B2; }
+        .instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        
+        .social-link i {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .companies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .companies-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .social-links {
+                gap: 10px;
+            }
+            
+            .social-link {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Company Social Media Directory</h1>
+            <p class="subtitle">Discover and connect with leading companies across various industries on their social platforms</p>
+        </header>
+        
+        <div class="companies-grid">
+            <!-- Company 1 -->
+            <div class="company-card">
+                <div class="card-header">
+                    <div class="company-logo">
+                        <img src="https://placehold.co/80x80/white/2c3e50?text=Apple" alt="Apple Logo">
+                    </div>
+                    <h2 class="company-name">Apple Inc.</h2>
+                    <p class="company-industry">Technology</p>
+                </div>
+                <div class="card-body">
+                    <a href="https://www.apple.com" class="website-link" target="_blank">
+                        <i class="fas fa-globe"></i> Visit Website
+                    </a>
+                    <div class="social-links">
+                        <a href="https://twitter.com/Apple" class="social-link twitter" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/apple/" class="social-link linkedin" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.facebook.com/apple/" class="social-link facebook" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/apple/" class="social-link instagram" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Company 2 -->
+            <div class="company-card">
+                <div class="card-header">
+                    <div class="company-logo">
+                        <img src="https://placehold.co/80x80/white/2c3e50?text=Google" alt="Google Logo">
+                    </div>
+                    <h2 class="company-name">Google</h2>
+                    <p class="company-industry">Technology</p>
+                </div>
+                <div class="card-body">
+                    <a href="https://www.google.com" class="website-link" target="_blank">
+                        <i class="fas fa-globe"></i> Visit Website
+                    </a>
+                    <div class="social-links">
+                        <a href="https://twitter.com/Google" class="social-link twitter" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/google/" class="social-link linkedin" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.facebook.com/Google/" class="social-link facebook" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/google/" class="social-link instagram" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Company 3 -->
+            <div class="company-card">
+                <div class="card-header">
+                    <div class="company-logo">
+                        <img src="https://placehold.co/80x80/white/2c3e50?text=Microsoft" alt="Microsoft Logo">
+                    </div>
+                    <h2 class="company-name">Microsoft</h2>
+                    <p class="company-industry">Technology</p>
+                </div>
+                <div class="card-body">
+                    <a href="https://www.microsoft.com" class="website-link" target="_blank">
+                        <i class="fas fa-globe"></i> Visit Website
+                    </a>
+                    <div class="social-links">
+                        <a href="https://twitter.com/Microsoft" class="social-link twitter" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/microsoft/" class="social-link linkedin" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.facebook.com/Microsoft/" class="social-link facebook" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/microsoft/" class="social-link instagram" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Company 4 -->
+            <div class="company-card">
+                <div class="card-header">
+                    <div class="company-logo">
+                        <img src="https://placehold.co/80x80/white/2c3e50?text=Amazon" alt="Amazon Logo">
+                    </div>
+                    <h2 class="company-name">Amazon</h2>
+                    <p class="company-industry">E-commerce</p>
+                </div>
+                <div class="card-body">
+                    <a href="https://www.amazon.com" class="website-link" target="_blank">
+                        <i class="fas fa-globe"></i> Visit Website
+                    </a>
+                    <div class="social-links">
+                        <a href="https://twitter.com/amazon" class="social-link twitter" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/amazon/" class="social-link linkedin" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.facebook.com/Amazon/" class="social-link facebook" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/amazon/" class="social-link instagram" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Company 5 -->
+            <div class="company-card">
+                <div class="card-header">
+                    <div class="company-logo">
+                        <img src="https://placehold.co/80x80/white/2c3e50?text=Meta" alt="Meta Logo">
+                    </div>
+                    <h2 class="company-name">Meta</h2>
+                    <p class="company-industry">Social Media</p>
+                </div>
+                <div class="card-body">
+                    <a href="https://about.meta.com" class="website-link" target="_blank">
+                        <i class="fas fa-globe"></i> Visit Website
+                    </a>
+                    <div class="social-links">
+                        <a href="https://twitter.com/Meta" class="social-link twitter" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/meta/" class="social-link linkedin" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.facebook.com/Meta/" class="social-link facebook" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/meta/" class="social-link instagram" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Company 6 -->
+            <div class="company-card">
+                <div class="card-header">
+                    <div class="company-logo">
+                        <img src="https://placehold.co/80x80/white/2c3e50?text=Netflix" alt="Netflix Logo">
+                    </div>
+                    <h2 class="company-name">Netflix</h2>
+                    <p class="company-industry">Entertainment</p>
+                </div>
+                <div class="card-body">
+                    <a href="https://www.netflix.com" class="website-link" target="_blank">
+                        <i class="fas fa-globe"></i> Visit Website
+                    </a>
+                    <div class="social-links">
+                        <a href="https://twitter.com/netflix" class="social-link twitter" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/netflix/" class="social-link linkedin" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.facebook.com/Netflix/" class="social-link facebook" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/netflix/" class="social-link instagram" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Company 7 -->
+            <div class="company-card">
+                <div class="card-header">
+                    <div class="company-logo">
+                        <img src="https://placehold.co/80x80/white/2c3e50?text=Spotify" alt="Spotify Logo">
+                    </div>
+                    <h2 class="company-name">Spotify</h2>
+                    <p class="company-industry">Music Streaming</p>
+                </div>
+                <div class="card-body">
+                    <a href="https://www.spotify.com" class="website-link" target="_blank">
+                        <i class="fas fa-globe"></i> Visit Website
+                    </a>
+                    <div class="social-links">
+                        <a href="https://twitter.com/Spotify" class="social-link twitter" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/spotify/" class="social-link linkedin" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.facebook.com/Spotify/" class="social-link facebook" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/spotify/" class="social-link instagram" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Company 8 -->
+            <div class="company-card">
+                <div class="card-header">
+                    <div class="company-logo">
+                        <img src="https://placehold.co/80x80/white/2c3e50?text=Tesla" alt="Tesla Logo">
+                    </div>
+                    <h2 class="company-name">Tesla</h2>
+                    <p class="company-industry">Automotive</p>
+                </div>
+                <div class="card-body">
+                    <a href="https://www.tesla.com" class="website-link" target="_blank">
+                        <i class="fas fa-globe"></i> Visit Website
+                    </a>
+                    <div class="social-links">
+                        <a href="https://twitter.com/Tesla" class="social-link twitter" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/tesla-motors/" class="social-link linkedin" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.facebook.com/tesla/" class="social-link facebook" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/teslamotors/" class="social-link instagram" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Company 9 -->
+            <div class="company-card">
+                <div class="card-header">
+                    <div class="company-logo">
+                        <img src="https://placehold.co/80x80/white/2c3e50?text=Adobe" alt="Adobe Logo">
+                    </div>
+                    <h2 class="company-name">Adobe</h2>
+                    <p class="company-industry">Software</p>
+                </div>
+                <div class="card-body">
+                    <a href="https://www.adobe.com" class="website-link" target="_blank">
+                        <i class="fas fa-globe"></i> Visit Website
+                    </a>
+                    <div class="social-links">
+                        <a href="https://twitter.com/Adobe" class="social-link twitter" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/adobe/" class="social-link linkedin" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.facebook.com/Adobe/" class="social-link facebook" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/adobe/" class="social-link instagram" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Company 10 -->
+            <div class="company-card">
+                <div class="card-header">
+                    <div class="company-logo">
+                        <img src="https://placehold.co/80x80/white/2c3e50?text=NVIDIA" alt="NVIDIA Logo">
+                    </div>
+                    <h2 class="company-name">NVIDIA</h2>
+                    <p class="company-industry">Technology</p>
+                </div>
+                <div class="card-body">
+                    <a href="https://www.nvidia.com" class="website-link" target="_blank">
+                        <i class="fas fa-globe"></i> Visit Website
+                    </a>
+                    <div class="social-links">
+                        <a href="https://twitter.com/NVIDIA" class="social-link twitter" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/nvidia/" class="social-link linkedin" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.facebook.com/NVIDIA/" class="social-link facebook" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/nvidia/" class="social-link instagram" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Company Social Media Directory &copy; 2023 | All social media links are official company profiles</p>
+        </footer>
+    </div>
+</body>
+</html>
+
