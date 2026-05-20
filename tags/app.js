@@ -143,8 +143,40 @@ async function analyzeBulkUpload() {
 }
 
 async function deleteOrg(){ if(editingId && confirm('Delete permanently?')){ try { await databases.deleteDocument(DB_ID, 'organizations', editingId); closeModal('org-modal'); } catch(e) { showToast("Delete failed", "error"); } } }
-async function addMeta(t, i){ const n = document.getElementById(i).value; if(!n) return; try { await databases.createDocument(DB_ID, t, ID.unique(), { name: n, order: Date.now() }); document.getElementById(i).value=''; } catch(e) {} }
-async function removeMeta(t, id){ if(!confirm("Delete this list/category?")) return; try { await databases.deleteDocument(DB_ID, t, id); } catch(e) {} }
+
+// ----------------------------------------------------
+// 🔥 NEW ROBUST META LOGIC (Lists & Categories)
+// ----------------------------------------------------
+async function addMeta(t, i) { 
+    const n = document.getElementById(i).value.trim(); 
+    if(!n) return showToast("Name cannot be empty", "error"); 
+    
+    try { 
+        await databases.createDocument(DB_ID, t, ID.unique(), { 
+            name: n, 
+            order: Date.now() 
+        }); 
+        
+        document.getElementById(i).value = ''; 
+        showToast("Added successfully!");
+        fetchCloudData(); // Force UI refresh
+    } catch(e) { 
+        console.error("Meta Add Error:", e);
+        showToast(e.message, "error"); // Surfaces exact Appwrite error
+    } 
+}
+
+async function removeMeta(t, id) { 
+    if(!confirm("Are you sure you want to delete this?")) return; 
+    try { 
+        await databases.deleteDocument(DB_ID, t, id); 
+        showToast("Deleted successfully!");
+        fetchCloudData(); // Force UI refresh
+    } catch(e) { 
+        console.error("Meta Delete Error:", e);
+        showToast(e.message, "error"); 
+    } 
+}
 
 // ==========================================
 // 8. ORGANIZATION DRAG AND DROP
@@ -229,7 +261,6 @@ function exportToCSV() {
     const rawSearch = document.getElementById('search-bar').value.toLowerCase();
     const searchGroups = rawSearch.split(',').map(s => s.trim()).filter(s => s !== '');
     
-    // Filter to match exactly what is on screen
     let visibleOrgs = db.orgs.filter(org => {
         if (listId !== 'all' && !org.listIds.includes(listId)) return false;
         if (catId !== 'all' && !org.catIds.includes(catId)) return false;
@@ -258,7 +289,6 @@ function exportToCSV() {
         const fb = t.facebook?.link && t.facebook.link !== '-' ? t.facebook.link : (t.facebook?.val || '');
         const web = t.website?.link && t.website.link !== '-' ? t.website.link : '';
 
-        // Safely wrap fields in quotes to prevent commas from breaking columns
         const row = [
             `"${org.name.replace(/"/g, '""')}"`,
             `"${tw.replace(/"/g, '""')}"`,
